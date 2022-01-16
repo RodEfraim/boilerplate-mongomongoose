@@ -21,6 +21,10 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
  * 
  * + Create a personSchema with its name, age, favoriteFoods prototype.
  * + Now, create a model called Person from the personSchema
+ * 
+ * Useful Links: 
+ * https://mongoosejs.com/docs/index.html
+ * https://mongoosejs.com/docs/schematypes.html#arrays
  */
 const { Schema } = mongoose;
 
@@ -40,14 +44,38 @@ const person2 = new Person({ name: 'Albert' });
 console.log(person2.name);
 
 
-//let Person;
 
+
+
+/**
+ * PART #3) Create and Save a Record of a Model
+ * Within the createAndSavePerson function, create a document instance using the Person model constructor
+ * you built before. Pass to the constructor an object having the fields name, age, and favoriteFoods.
+ * Their types must conform to the ones in the personSchema. Then, call the method document.save() on
+ * the returned document instance. 
+ */
 const createAndSavePerson = (done) => {
-  done(null /*, data*/);
+
+  var Beni = new Person({name: "Beni", age: 62, favoriteFoods:  ["Hamburger", "Pizza"]});
+
+  Beni.save(function(err, data){
+    if(err) return console.error(err);
+    done(null, data);
+  });
 };
 
+/**
+ * Part #4) Create Many Records with model.create()
+ * Sometimes you need to create many instances of your models, e.g. when seeding a database with initial data.
+ * Model.create() takes an array of objects like [{name: 'John', ...}, {...}, ...] as the first argument, and
+ * saves them all in the db.
+ */
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+
+  Person.create(arrayOfPeople, function(err, data){
+    if(err) return console.error(err);
+    done(null, data);
+  });
 };
 
 const findPeopleByName = (personName, done) => {
