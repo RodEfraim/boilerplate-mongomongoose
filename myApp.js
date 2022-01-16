@@ -44,7 +44,11 @@ const person2 = new Person({ name: 'Albert' });
 console.log(person2.name);
 
 
-
+// Arrays like this used to pass onto createManyPeople function.
+var arrayOfPeople = [
+  {name: "Susi Etinguer", age: 62, favoriteFoods:  ["Hamburger", "Pizza"]},
+  {name: "Vivi Efraim", age: 57, favoriteFoods:  ["Steak", "Salad"]},
+  {name: "Gabriel Efraim", age: 58, favoriteFoods:  ["Beans", "Pizza"]}];
 
 
 /**
@@ -78,8 +82,18 @@ const createManyPeople = (arrayOfPeople, done) => {
   });
 };
 
+/**
+ * Part #5) Use model.find() to Search Your Database.
+ * Modify the findPeopleByName function to find all the people having a given name, using Model.find().
+ * In its simplest usage, Model.find() accepts a query document (a JSON object) as the first argument, then a
+ * callback. It returns an array of matches. It supports an extremely wide range of search options.
+ */
 const findPeopleByName = (personName, done) => {
-  done(null /*, data*/);
+
+  Person.find({name: personName}, function(err, data){
+    if(err) return console.error(err);
+    done(null, data);
+  });
 };
 
 const findOneByFood = (food, done) => {
