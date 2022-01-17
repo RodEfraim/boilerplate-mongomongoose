@@ -33,7 +33,7 @@ const personSchema = new Schema({
   name: { type: String, required: true },
   age: Number,
   favoriteFoods: [{ type: String}]
-  //favoriteFoods: [],
+  //favoriteFoods: [String],
 });
 
 const Person = mongoose.model('Person', personSchema);
@@ -126,10 +126,28 @@ const findPersonById = (personId, done) => {
   });
 };
 
+/**
+ * Part #8) Perform Classic Updates by Running Find, Edit, then Save
+ * Modify the findEditThenSave function to find a person by _id (use any of the above methods) with the parameter
+ * personId as search key. Add "hamburger" to the list of the person's favoriteFoods (you can use Array.push()).
+ * Then - inside the find callback - save() the updated Person
+ */
 const findEditThenSave = (personId, done) => {
   const foodToAdd = "hamburger";
 
-  done(null /*, data*/);
+  Person.findById(personId, function(err, person){
+
+    if(err) return console.error(err);
+    //done(null, data);
+    
+    person.favoriteFoods.push(foodToAdd);
+
+    person.save(function(err, data){
+      if(err) return console.error(err);
+      done(null, data)
+    })
+
+  });
 };
 
 const findAndUpdate = (personName, done) => {
