@@ -150,10 +150,22 @@ const findEditThenSave = (personId, done) => {
   });
 };
 
+/**
+ * Part #9) Perform New Updates on a Document Using model.findOneAndUpdate()
+ * Modify the findAndUpdate function to find a person by Name and set the person's age to 20. Use the function
+ * parameter personName as the search key
+ * 
+ * Modify the findAndUpdate function to find a person by Name and set the person's age to 20. Use the function
+ * parameter personName as the search key.
+ */
 const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
 
-  done(null /*, data*/);
+  Person.findOneAndUpdate({name: personName}, {age: ageToSet}, {new: true}, (err, updatedDoc) => {
+    if(err) return console.log(err);
+    done(null, updatedDoc);
+  })
+  
 };
 
 const removeById = (personId, done) => {
