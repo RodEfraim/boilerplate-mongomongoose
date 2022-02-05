@@ -168,8 +168,19 @@ const findAndUpdate = (personName, done) => {
   
 };
 
+/**
+ * Part #10) findByIdAndRemove and findOneAndRemove are like the previous update methods.
+ * They pass the removed document to the db. As usual, use the function argument personId as the search key.
+ * 
+ * Modify the removeById function to delete one person by the person's _id. You should use one of the methods
+ * findByIdAndRemove() or findOneAndRemove().
+ */
 const removeById = (personId, done) => {
-  done(null /*, data*/);
+
+  Person.findByIdAndRemove(personId, function(err, data){
+    if(err) return console.error(err);
+    done(null, data);
+  });
 };
 
 const removeManyPeople = (done) => {
