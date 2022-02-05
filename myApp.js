@@ -201,10 +201,33 @@ const removeManyPeople = (done) => {
   });
 };
 
+/**
+ * Part #12) Chain Search Query Helpers to Narrow Search Results
+ * If you don’t pass the callback as the last argument to Model.find() (or to the other search methods), the
+ * query is not executed. You can store the query in a variable for later use. This kind of object enables
+ * you to build up a query using chaining syntax. The actual db search is executed when you finally chain
+ * the method .exec(). You always need to pass your callback to this last method. There are many query helpers,
+ * here we'll use the most commonly used
+ * 
+ * Modify the queryChain function to find people who like the food specified by the variable named foodToSearch.
+ * Sort them by name, limit the results to two documents, and hide their age. Chain .find(), .sort(), .limit(),
+ * .select(), and then .exec(). Pass the done(err, data) callback to exec().
+ * 
+ */
 const queryChain = (done) => {
   const foodToSearch = "burrito";
 
-  done(null /*, data*/);
+  // Model.find({name: "Leah"})  <-- TO create but not execture a find query.
+  // var findQuery = YourModel.find({ name: "Leah" }); <-- Or store the find query into variable for later use.
+  // yourArray.sort({ age: 1 }); <-- Here: 1 for ascending	order and -1 for descending order.
+  // yourArray.limit(5); <-- To limit an array's size. Returns array which has 5 items in it.
+  // yourArray.select({ name: 0, age: 1 }); <-- To hide certain property from the result. Here: 0 means false and
+  // thus hide name property; <-- 1 means true so age property will show.
+  // YourQuery.exec(function(err, docs){}); <-- Callback needed to execute the query.
+
+  Person.find({favoriteFoods : foodToSearch}).sort({name : 1}).limit(2).select({age: 0}).exec(function(err,data){
+    if(err) return console.error(err);
+    done(null, data);  });
 };
 
 /** **Well Done !!**
