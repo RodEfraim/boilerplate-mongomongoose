@@ -183,10 +183,22 @@ const removeById = (personId, done) => {
   });
 };
 
+/**
+ * Part #11) Delete Many Documents with model.remove()
+ * Modify the removeManyPeople function to delete all the people whose name is within the variable
+ * nameToRemove, using Model.remove(). Pass it to a query document with the name field set, and a callback.
+ * 
+ * he Model.remove() doesn’t return the deleted document, but a JSON object containing the outcome of the
+ * operation, and the number of items affected. Don’t forget to pass it to the done() callback, since we use
+ * it in tests.
+ */
 const removeManyPeople = (done) => {
   const nameToRemove = "Mary";
 
-  done(null /*, data*/);
+  Person.remove({name : nameToRemove}, function(err,data){
+    if(err) return console.error(err);
+    done(null, data);
+  });
 };
 
 const queryChain = (done) => {
